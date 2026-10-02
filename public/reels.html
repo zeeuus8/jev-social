@@ -26,6 +26,28 @@
             <p>Choose a version 1 Reel export (up to 10 MB). Imports stay on this computer. Browsing makes no paid analysis calls.</p>
           </div>
         </header>
+        <section class="reels-analysis" aria-labelledby="analysis-title">
+          <div class="reels-analysis-heading"><h2 id="analysis-title">Analyze a profile.</h2><button id="analysis-refresh" class="button" type="button">Refresh connection</button></div>
+          <p id="analysis-connection" class="reels-help" role="status">Checking the local analysis service…</p>
+          <form id="analysis-form" class="reels-analysis-form">
+            <label>Instagram profile<input id="analysis-creator" name="creator" placeholder="@creator" maxlength="31" autocomplete="off" required /></label>
+            <label>Reels<input id="analysis-limit" name="limit" type="number" min="1" max="100" step="1" value="20" required /></label>
+            <label>Apify cap (USD)<input id="analysis-budget" name="budget" type="number" min="0.05" max="30" step="0.01" value="0.25" required /></label>
+            <label>Spoken language<select id="analysis-language"><option value="">Auto-detect</option><option value="en">English</option><option value="pt">Portuguese</option><option value="es">Spanish</option></select></label>
+            <button id="analysis-start" class="button primary" type="submit" disabled>Start analysis →</button>
+          </form>
+          <p class="reels-help">Starting collects public Reels with Apify, transcribes their audio, and classifies speech with Jev. Provider charges apply. The Apify cap covers collection only; transcription and classification are billed separately. Audio processing may temporarily download source media.</p>
+          <p id="analysis-error" class="reels-error" role="alert" hidden></p>
+          <div id="analysis-jobs" class="reels-job" hidden>
+            <label>Analysis history<select id="analysis-job"></select></label>
+            <p id="analysis-stage" role="status" aria-live="polite"></p>
+            <progress id="analysis-progress" max="1" value="0" aria-label="Analysis progress"></progress>
+            <p id="analysis-counts" class="reels-help"></p>
+            <p id="analysis-note" class="reels-help"></p>
+            <div class="reels-job-actions"><button id="analysis-pause" class="button" type="button" hidden>Pause analysis</button><button id="analysis-resume" class="button" type="button" hidden>Resume analysis</button><button id="analysis-open" class="button" type="button" disabled>Save and open results</button></div>
+            <p class="reels-help">Pause stops new Reels from starting; processing already in progress finishes. An Apify collection running remotely continues until completion or its cap. Resuming reuses saved work; unfinished requests can incur charges.</p>
+          </div>
+        </section>
         <p id="reels-error" class="reels-error" role="alert" hidden></p>
         <div class="reels-status"><p id="reels-message" role="status" aria-live="polite">Loading saved collections…</p><button id="reels-retry" class="button" type="button" hidden>Retry loading</button></div>
         <section id="reels-empty" class="reels-empty" hidden><p class="eyebrow">READY WHEN YOU ARE</p><h2>Your first collection starts here.</h2><p>Import a saved Reel export to browse transcripts, classifications and source links. Collections can contain any creator. New searches and automatic analysis are separate steps.</p><button id="reels-empty-import" class="button" type="button">Choose an export ↑</button></section>

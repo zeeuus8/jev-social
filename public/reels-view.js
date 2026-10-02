@@ -223,4 +223,5 @@ export async function initReelsLibrary({ document = globalThis.document, window 
     }
   });
   await loadLibrary(new URL(window.location.href).searchParams.get("collection"));
+  return { reload: loadLibrary };
 }

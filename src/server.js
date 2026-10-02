@@ -17,6 +17,7 @@ import { listRuns, markInterruptedRuns, readRun } from "./runs.js";
 import { probeSocai, unknownSocaiReadiness } from "./socai.js";
 import { importReels, listReels, readReels } from "./reels.js";
 import { MAX_REELS_BYTES } from "./reels-contract.js";
+import { createReelsPipeline } from "./reels-pipeline.js";
 
 const PUBLIC_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../public");
 const MEDIA_TTL_MS = 60 * 60_000;
@@ -26,6 +27,7 @@ const STATIC_FILES = {
   "/reels.css": ["reels.css", "text/css; charset=utf-8"],
   "/reels.js": ["reels.js", "text/javascript; charset=utf-8"],
   "/reels-view.js": ["reels-view.js", "text/javascript; charset=utf-8"],
+  "/reels-pipeline.js": ["reels-pipeline.js", "text/javascript; charset=utf-8"],
   "/src/reels-contract.js": ["../src/reels-contract.js", "text/javascript; charset=utf-8"],
   "/app.js": ["app.js", "text/javascript; charset=utf-8"],
   "/evidence-items.js": ["evidence-items.js", "text/javascript; charset=utf-8"],
@@ -50,8 +52,9 @@ export async function startServer({ port = 8766, open = true, env = process.env 
   }
 
   const mediaRegistry = new Map();
+  const reelsPipeline = createReelsPipeline({ env });
   const server = http.createServer((request, response) => {
-    void handleRequest(request, response, env, mediaRegistry);
+    void handleRequest(request, response, env, mediaRegistry, reelsPipeline);
   });
   await new Promise((resolve, reject) => {
     server.once("error", reject);
@@ -66,7 +69,7 @@ export async function startServer({ port = 8766, open = true, env = process.env 
   return { server, url, accessUrl: url };
 }
 
-async function handleRequest(request, response, env, mediaRegistry) {
+async function handleRequest(request, response, env, mediaRegistry, reelsPipeline) {
   try {
     if (!validHost(request.headers.host)) {
       return sendJson(response, 403, { error: { code: "INVALID_HOST", message: "Invalid Host header." } });
@@ -164,6 +167,23 @@ async function handleRequest(request, response, env, mediaRegistry) {
       const body = await readJson(request);
       validateSearchBody(body);
       return streamSearch(request, response, body, env, mediaRegistry);
+    }
+    if (request.method === "GET" && url.pathname === "/api/reels/pipeline") {
+      return sendJson(response, 200, await reelsPipeline.status());
+    }
+    if (request.method === "POST" && url.pathname === "/api/reels/jobs") {
+      assertSameOrigin(request);
+      return sendJson(response, 202, await reelsPipeline.start(await readJson(request)));
+    }
+    const reelsJob = url.pathname.match(/^\/api\/reels\/jobs\/([A-Za-z0-9_-]{1,90})(?:\/(pause|resume|sync))?$/);
+    if (reelsJob && request.method === "GET" && !reelsJob[2]) {
+      return sendJson(response, 200, await reelsPipeline.read(reelsJob[1]));
+    }
+    if (reelsJob && request.method === "POST" && reelsJob[2]) {
+      assertSameOrigin(request);
+      const body = await readJson(request);
+      if (!body || typeof body !== "object" || Array.isArray(body) || Object.keys(body).length) throw httpError(400, "INVALID_BODY", "This action does not accept additional settings.");
+      return sendJson(response, 200, reelsJob[2] === "sync" ? await reelsPipeline.sync(reelsJob[1]) : await reelsPipeline.change(reelsJob[1], reelsJob[2]));
     }
     if (request.method === "POST" && url.pathname === "/api/reels") {
       assertSameOrigin(request);

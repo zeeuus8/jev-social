@@ -113,6 +113,28 @@ filtering the library do not start collection, transcription or paid analysis.
 See the [version 1 contract](docs/reels-import.md) for the export format and
 identity rules. Unversioned Creator Lab files need an explicit adapter first.
 
+The library can also start bounded analyses through a separately running
+Creator Lab service compatible with `script-anatomy-v1`. Configure its provider
+credentials in Creator Lab, then connect this checkout explicitly:
+
+```bash
+JEV_SOCIAL_CREATOR_LAB_URL=http://127.0.0.1:5190 npm start -- serve --no-open
+```
+
+Enter any Instagram handle, 1–100 Reels, an Apify cap from $0.05–$30, and a
+transcript language. **Start analysis** and **Resume analysis** can incur charges;
+the cap covers Apify collection only, with transcription and classification
+billed separately. Creator Lab may temporarily download media to extract audio.
+Pause stops new items after in-flight processing finishes; a remote Apify run
+continues until completion or its cap. Saved partial results remain available.
+
+**Save and open results** adapts the source job to the v1 library contract.
+Completed jobs started from this page are saved automatically. Refreshing or
+reopening saved history never starts or resumes processing. Lost start responses
+are not retried automatically: refresh the existing job before acting again.
+See [Creator Lab integration](docs/reels-import.md#creator-lab-integration) for
+the compatibility and recovery boundaries.
+
 ## Recorded evidence
 
 | Recorded run | Captured result | Elapsed time | Verification boundary |

@@ -91,6 +91,45 @@ confidence and review/status. Confidence thresholds apply to the selected
 dimension and every active label filter. The function preserves null metrics
 and does not infer engagement effects, causality, or popularity rankings.
 
+## Creator Lab integration
+
+`JEV_SOCIAL_CREATOR_LAB_URL` must be an explicit numeric loopback HTTP origin,
+such as `http://127.0.0.1:5190`. Hostnames, credentials, paths, query strings,
+fragments, HTTPS and redirects are rejected. Restart Jev Social after changing
+the endpoint; it is fixed for each server instance. Provider credentials remain
+inside Creator Lab. Jev Social only uses the session token obtained from that
+same local service for its mutation requests and never exposes it in the UI.
+
+The adapter requires the `script-anatomy-v1` bootstrap and job version. It
+preserves collection and item IDs, maps queued/transcribing/transcribed/classifying
+items to unclassified v1 rows, maps complete items to classified rows, and retains
+excluded/error rows. Excluded or failed rows discard any stale classification.
+Only the normalized library allowlist is persisted; media URLs, raw provider
+responses and diagnostics do not become library content. Unsupported versions,
+unsafe sources and unknown item states fail visibly before replacing a snapshot.
+
+The form accepts any valid Instagram handle, a limit of 1–100 Reels, an Apify
+collection cap of $0.05–$30, and auto/en/pt/es transcription. Concurrency is fixed
+at two. The adapter checks that the created job matches the requested limits
+before starting it. Existing jobs outside those bounds can be read and saved but
+cannot be resumed here. Partial and paused snapshots reuse the same library ID.
+
+`GET /api/reels/pipeline` and `GET /api/reels/jobs/<id>` only inspect saved state.
+Same-origin JSON is required for `POST /api/reels/jobs` (explicit start) and the
+`pause`, `resume`, and `sync` actions under `/api/reels/jobs/<id>/`. Actions reject
+extra settings. `sync` only imports existing results; it does not run providers.
+Starting or resuming is an explicit user action; those actions can incur provider
+charges and Creator Lab may temporarily download source media for audio extraction.
+The Apify cap excludes transcription and classification costs. Pause does not
+abort a remotely running collector or requests already in flight.
+
+Requests have a 15-second timeout and 10 MB response bound. No mutation is
+retried automatically. A lost job-creation response may leave an unstarted saved
+job; recover it from history. A lost run response returns an uncertain state for
+that existing job, with resume disabled until the state is recovered. An uncertain
+Apify launch must be resolved in Creator Lab. The service also enforces its own
+active-job guard; the Jev adapter serializes mutations within its server instance.
+
 ## Verification
 
 Run `npm run check` and `npm test`. Focused tests cover normalization, malformed
