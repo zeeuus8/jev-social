@@ -1,8 +1,14 @@
 # Reel imports: version 1
 
-This first slice of #124 imports already processed JSON. It adds no UI, browser
-operations, provider calls or media downloads. Future producers (#125) should
-target this contract instead of persisting their raw provider responses.
+The import-only contract from #124 accepts already processed JSON, without
+browser operations, provider calls or media downloads. Future producers (#125)
+should target this contract instead of persisting their raw provider responses.
+
+The local `/reels` library uses this contract to import files, reopen collections,
+filter classifications, and read transcripts and timestamped segments. Failed
+imports preserve the currently loaded collection. A failed or uncertain save
+offers a reload so the user can check persisted data before trying again. Opening
+the library or choosing a collection never starts automated processing.
 
 ## Input
 

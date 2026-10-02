@@ -41,6 +41,19 @@ test("Reel API imports without credentials and reopens the same collection after
   assert.equal(missing.status, 404);
   assert.equal((await missing.json()).error.code, "REELS_NOT_FOUND");
   assert.equal((await fetch(`${running.url}/`)).status, 200);
+  for (const [route, contentType, expected] of [
+    ["/reels", "text/html", "Your first collection starts here"],
+    ["/reels.css", "text/css", ".reels-layout"],
+    ["/reels.js", "text/javascript", "initReelsLibrary"],
+    ["/reels-view.js", "text/javascript", "readReelsFile"],
+    ["/src/reels-contract.js", "text/javascript", "filterReels"],
+  ]) {
+    const asset = await fetch(`${running.url}${route}`);
+    assert.equal(asset.status, 200);
+    assert.ok(asset.headers.get("content-type").startsWith(contentType));
+    assert.ok((await asset.text()).includes(expected));
+  }
+  for (const route of ["/src/reels.js", "/src/config.js", "/reels/v1/private.json"]) assert.equal((await fetch(`${running.url}${route}`)).status, 404);
 });
 
 test("Reel API rejects cross-origin, malformed, unsafe and oversized imports without writing data", async (t) => {

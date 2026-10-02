@@ -102,11 +102,16 @@ The complete field limits, file permissions, provider-retention boundary, browse
 
 ## Local Reel imports
 
-The import-only API accepts versioned, already processed Reel collections and
-stores their normalized transcripts, classifications and nullable metrics in the
-isolated local state directory. See the [version 1 contract](docs/reels-import.md)
-for the schema, identity rules, endpoints and offline validation. A library UI
-and automated collection are outside this first slice.
+Open **Reel library** from the local research screen, or visit `/reels`, to import
+version 1 Reel exports and reopen saved collections. Filter by topic, hook,
+structure, confidence or status, then read transcripts and timestamped segments
+alongside saved classifications and original Instagram links. Unknown metrics
+remain unknown; excluded and failed items remain visible.
+
+Imports stay in the isolated local state directory. Opening, importing and
+filtering the library do not start collection, transcription or paid analysis.
+See the [version 1 contract](docs/reels-import.md) for the export format and
+identity rules. Unversioned Creator Lab files need an explicit adapter first.
 
 ## Recorded evidence
 

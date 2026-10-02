@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <title>Reel library · Jev Social</title>
+    <link rel="stylesheet" href="/styles.css?v=2" />
+    <link rel="stylesheet" href="/reels.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <a class="skip-link" href="#main-content">Skip to main content</a>
+      <header class="topbar">
+        <a class="brand" href="/" aria-label="Jev Social home"><span class="brand-mark"><i></i></span><strong>JEV <b>×</b> socai</strong></a>
+        <nav class="top-actions" aria-label="Workspace"><a href="/">Research</a><a href="/reels" aria-current="page">Reel library</a></nav>
+      </header>
+      <main id="main-content" class="reels-main" tabindex="-1">
+        <header class="reels-header">
+          <div><p class="eyebrow">YOUR REEL LIBRARY</p><h1>The words.<br /><em>The evidence.</em></h1><p>Explore saved scripts and patterns. Read the transcript, check the labels, then open the source.</p></div>
+          <div class="reels-import">
+            <label for="reels-collection">Saved collection</label>
+            <select id="reels-collection" disabled><option>Loading collections…</option></select>
+            <button id="reels-import-button" class="button" type="button">Import collection ↑</button>
+            <input id="reels-file" hidden type="file" accept=".json,application/json" aria-label="Import Reel collection JSON" />
+            <p>Choose a version 1 Reel export (up to 10 MB). Imports stay on this computer. Browsing makes no paid analysis calls.</p>
+          </div>
+        </header>
+        <p id="reels-error" class="reels-error" role="alert" hidden></p>
+        <div class="reels-status"><p id="reels-message" role="status" aria-live="polite">Loading saved collections…</p><button id="reels-retry" class="button" type="button" hidden>Retry loading</button></div>
+        <section id="reels-empty" class="reels-empty" hidden><p class="eyebrow">READY WHEN YOU ARE</p><h2>Your first collection starts here.</h2><p>Import a saved Reel export to browse transcripts, classifications and source links. Collections can contain any creator. New searches and automatic analysis are separate steps.</p><button id="reels-empty-import" class="button" type="button">Choose an export ↑</button></section>
+        <div id="reels-content" hidden>
+          <section id="reels-overview" class="reels-stats" aria-label="Collection summary"></section>
+          <form id="reels-filters" class="reels-filters" aria-label="Filter Reels">
+            <label>Topic<select id="reels-topic"><option value="all">All topics</option></select></label>
+            <label>Hook<select id="reels-hook"><option value="all">All hooks</option></select></label>
+            <label>Structure<select id="reels-structure"><option value="all">All structures</option></select></label>
+            <label>Status<select id="reels-review"><option value="all">All Reels</option><option value="review">Needs review</option><option value="classified">Classified</option><option value="unclassified">Unclassified</option><option value="excluded">Excluded</option><option value="error">Processing error</option></select></label>
+            <label>Confidence<select id="reels-confidence"><option value="0">All labels</option><option value="0.65">65% or higher</option><option value="0.85">85% or higher</option></select></label>
+            <button id="reels-reset" class="button" type="button">Reset filters</button>
+          </form>
+          <p class="reels-help">Confidence filters apply to the hook and any selected topic or structure. Confidence is the classifier’s estimate, not a measured accuracy score.</p>
+          <section aria-labelledby="reels-library-title">
+            <div class="reels-section-heading"><h2 id="reels-library-title">Read before you reuse.</h2><p id="reels-match-count" role="status" aria-live="polite"></p></div>
+            <div class="reels-layout">
+              <div><div id="reels-cards" class="reels-cards"></div><nav class="reels-pagination" aria-label="Reel pages"><button id="reels-prev" class="button" type="button">← Previous</button><span id="reels-page"></span><button id="reels-next" class="button" type="button">Next →</button></nav></div>
+              <aside id="reels-detail" class="reels-detail" aria-label="Selected Reel"></aside>
+            </div>
+          </section>
+          <p class="reels-footer">Saved speech classifications · Creator Lab vocabulary by Artem Novitckii. Unknown counts stay unknown. This snapshot does not establish what caused performance or measure retention and conversions.</p>
+        </div>
+      </main>
+    </div>
+    <script type="module" src="/reels.js"></script>
+  </body>
+</html>

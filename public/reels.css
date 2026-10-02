@@ -1,0 +1,72 @@
+[hidden] { display: none !important; }
+.reels-main { flex: 1; min-height: 0; overflow: auto; padding: 38px clamp(18px, 4vw, 64px) 48px; }
+.reels-header { display: flex; justify-content: space-between; align-items: end; gap: 40px; padding-bottom: 32px; }
+.reels-header h1 { font-size: clamp(44px, 5vw, 70px); line-height: .97; margin: 14px 0 18px; }
+.reels-header p:not(.eyebrow) { max-width: 490px; font-size: 14px; line-height: 1.6; color: var(--muted); margin-bottom: 0; }
+.reels-import { display: grid; gap: 10px; width: 310px; flex-shrink: 0; }
+.reels-main label { display: grid; gap: 7px; font: 700 10px var(--mono); }
+.reels-main select { min-width: 0; max-width: 100%; height: 38px; border: 1px solid var(--ink); background: #fff; padding: 0 28px 0 10px; font: 12px var(--sans); }
+.reels-main select:focus-visible, .reels-main button:focus-visible, .reels-main a:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; box-shadow: 0 0 0 4px var(--pink-soft); }
+.reels-import .button { background: var(--ink); color: white; text-align: left; }
+.reels-import p { font-size: 11px !important; margin: 0; }
+.reels-status { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; padding: 12px 15px; border-left: 3px solid var(--pink); background: var(--pink-soft); }
+.reels-status p { flex: 1; margin: 0; font: 11px/1.6 var(--mono); overflow-wrap: anywhere; }
+.reels-error { border: 1px solid #b42318; background: #fff1ef; color: #80170f; padding: 14px; font-size: 13px; }
+.reels-empty { padding: 50px 0; max-width: 560px; line-height: 1.7; }
+.reels-empty h2 { font-size: 30px; line-height: 1.2; letter-spacing: -.04em; }
+.reels-empty > p:not(.eyebrow) { color: var(--muted); font-size: 14px; }
+.reels-stats { display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--ink); margin: 24px 0; background: white; }
+.reels-stat { padding: 18px 22px; border-right: 1px solid var(--line); }
+.reels-stat:last-child { border: 0; }
+.reels-stat span { display: block; color: var(--muted); font: 10px var(--mono); }
+.reels-stat strong { display: block; margin-top: 12px; font-size: 32px; letter-spacing: -.06em; }
+.reels-filters { display: flex; flex-wrap: wrap; gap: 12px; align-items: end; padding: 4px 0 10px; }
+.reels-filters label { flex: 1 1 125px; }
+.reels-section-heading { display: flex; align-items: end; justify-content: space-between; gap: 20px; margin: 30px 0 16px; }
+.reels-section-heading h2 { margin: 0; font-size: 26px; letter-spacing: -.04em; }
+.reels-section-heading > p { margin: 0; font: 11px var(--mono); color: var(--muted); }
+.reels-help, .reels-footer { color: var(--muted); font-size: 11px; line-height: 1.6; }
+.reels-layout { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(300px, 1fr); align-items: start; gap: 24px; }
+.reels-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.reels-card { display: block; text-align: left; width: 100%; border: 1px solid var(--line); background: #fff; padding: 16px; min-height: 155px; }
+.reels-card:hover { border-color: var(--ink); }
+.reels-card[aria-pressed="true"] { border-color: var(--ink); box-shadow: 3px 3px 0 var(--pink); }
+.reels-card strong { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; font-size: 13px; line-height: 1.5; font-weight: 650; overflow-wrap: anywhere; }
+.reels-author { display: block; margin-bottom: 8px; font: 9px/1.5 var(--mono); color: var(--muted); overflow-wrap: anywhere; }
+.reels-card-metric { display: block; margin-top: 12px; font: 10px/1.6 var(--mono); }
+.reels-badge { display: inline-block; margin-top: 10px; padding: 4px 6px; background: #fff0d8; color: #78410a; font: 9px var(--mono); }
+.reels-badge.neutral { color: var(--muted); background: #eef1f5; }
+.reels-pagination { display: flex; justify-content: space-between; align-items: center; margin-top: 18px; gap: 8px; font: 10px var(--mono); }
+.reels-main button:disabled { cursor: default; }
+.reels-detail { position: sticky; top: 16px; min-width: 0; border: 1px solid var(--ink); border-top: 4px solid var(--pink); background: white; padding: 22px; max-height: calc(100vh - 110px); overflow: auto; }
+.reels-detail h3 { margin: 12px 0; font-size: 20px; letter-spacing: -.035em; line-height: 1.4; overflow-wrap: anywhere; }
+.reels-detail h3:focus { outline: 2px solid var(--ink); outline-offset: 3px; }
+.reels-detail a { color: var(--ink); font-size: 12px; text-underline-offset: 3px; }
+.reels-detail-meta { color: var(--muted); font: 10px/1.8 var(--mono); white-space: pre-line; }
+.reels-review-note { padding: 11px; background: #fff0d8; font-size: 12px; line-height: 1.6; }
+.reels-labels { margin: 18px 0; }
+.reels-label-row { display: grid; grid-template-columns: 85px minmax(0, 1fr) auto; gap: 8px; border-bottom: 1px solid var(--line); padding: 8px 0; font-size: 11px; overflow-wrap: anywhere; }
+.reels-label-row dt { color: var(--muted); }
+.reels-label-row dd { margin: 0; }
+.reels-label-row.uncertain { background: #fff8eb; }
+.reels-confidence { font: 10px var(--mono); }
+.reels-detail h4 { margin: 22px 0 12px; font: 700 11px var(--mono); }
+.reels-segments { list-style: none; margin: 0; padding: 0; }
+.reels-segment { border-left: 2px solid var(--line); padding-left: 12px; margin-bottom: 18px; }
+.reels-segment small { color: var(--muted); font: 9px var(--mono); }
+.reels-segment p, .reels-transcript { font-size: 13px; line-height: 1.75; white-space: pre-wrap; overflow-wrap: anywhere; margin: 6px 0; }
+.reels-detail summary { cursor: pointer; font-size: 12px; padding: 12px 0; }
+.reels-footer { margin-top: 35px; border-top: 1px solid var(--line); padding-top: 15px; }
+@media (max-width: 1050px) { .reels-cards { grid-template-columns: 1fr; } }
+@media (max-width: 720px) {
+  .reels-header { display: block; }
+  .reels-import { width: 100%; margin-top: 25px; }
+  .reels-layout { grid-template-columns: 1fr; }
+  .reels-detail { position: static; max-height: none; }
+  .reels-stats { grid-template-columns: repeat(2, 1fr); }
+  .reels-stat { border-bottom: 1px solid var(--line); padding: 15px; }
+  .reels-section-heading { align-items: start; flex-direction: column; gap: 8px; }
+  .reels-pagination .button { padding-inline: 10px; }
+  .topbar { padding-inline: 16px; gap: 12px; }
+  .top-actions a { padding-inline: 8px; }
+}
